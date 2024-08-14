@@ -3,11 +3,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import serializers
 
-from devopshobbies.api.pagination import LimitOffsetPagination
-from devopshobbies.blog.models import Product
+from social_media.api.pagination import LimitOffsetPagination
+from social_media.blog.models import Product
 
-from devopshobbies.blog.services.products import create_product
-from devopshobbies.blog.selectors.products import get_products
+from social_media.blog.services.products import create_product
+from social_media.blog.selectors.products import get_products
 from drf_spectacular.utils import extend_schema
 
 
