@@ -19,6 +19,7 @@ LOCAL_APPS = [
     'social_media.users.apps.UsersConfig',
     'social_media.authentication.apps.AuthenticationConfig',
     'social_media.blog.apps.BlogConfig',
+    'social_media.users.apps.UsersConfig'
 ]
 
 
