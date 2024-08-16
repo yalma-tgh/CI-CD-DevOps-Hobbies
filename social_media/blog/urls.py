@@ -1,6 +1,5 @@
 
 from django.urls import path, include
-from social_media.blog.apis.products import ProductApi
 from django.urls import path
 
 from .apis.post import PostApi, PostDetailApi 
