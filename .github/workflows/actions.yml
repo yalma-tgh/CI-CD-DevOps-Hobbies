@@ -28,6 +28,7 @@ jobs:
       - name: Ensure Project Directory Exists
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} << EOF
+            sudo rm -rf $PROJECT_PATH
             sudo mkdir -p $PROJECT_PATH
             sudo chown -R ${{ secrets.USER }}:${{ secrets.USER }} $PROJECT_PATH
             chmod -R 755 $PROJECT_PATH
@@ -36,12 +37,7 @@ jobs:
       - name: Deploy Application
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} << EOF
-            if [ ! -d "$PROJECT_PATH/.git" ]; then
-              git clone $GIT_REPO $PROJECT_PATH
-            else
-              cd $PROJECT_PATH
-              git pull origin $GIT_BRANCH
-            fi
+            git clone $GIT_REPO $PROJECT_PATH
           EOF
 
       - name: Run Docker Compose on Server
