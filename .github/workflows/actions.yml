@@ -40,6 +40,14 @@ jobs:
             git clone $GIT_REPO $PROJECT_PATH
           EOF
 
+      - name: Set Executable Permissions
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} << EOF
+            chmod +x $PROJECT_PATH/docker/celery_entrypoint.sh
+            chmod +x $PROJECT_PATH/docker/web_entrypoint.sh
+            chmod +x $PROJECT_PATH/docker/beats_entrypoint.sh
+          EOF
+
       - name: Run Docker Compose on Server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} << EOF
