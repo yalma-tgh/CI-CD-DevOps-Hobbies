@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PROJECT_PATH: /home/yalma/social_media
-      GIT_REPO: git@github.com:yalma-tgh/CI-CD-DevOps-Hobbies.git
+      GIT_REPO: https://github.com/yalma-tgh/CI-CD-DevOps-Hobbies.git
       GIT_BRANCH: main
 
     steps:
