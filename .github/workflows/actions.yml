@@ -29,7 +29,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.IP }} << EOF
             sudo mkdir -p $PROJECT_PATH
-            sudo chown -R $USER:$USER $PROJECT_PATH
+            sudo chown -R ${{ secrets.USER }}:${{ secrets.USER }} $PROJECT_PATH
             chmod -R 755 $PROJECT_PATH
           EOF
 
