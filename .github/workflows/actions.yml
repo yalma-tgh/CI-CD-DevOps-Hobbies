@@ -1,56 +1,3 @@
-The error you encountered, `"Permission denied"`, suggests that the Git command does not have the necessary permissions to write to the `/home/***/social_media/.git` directory on the remote server. This is often due to one of the following reasons:
-
-1. **Incorrect Directory Ownership or Permissions**: The user you're SSH'ing into the server as (`${{ secrets.USER }}`) might not have the necessary permissions to access or write to the `/home/***/social_media` directory. This can happen if the directory is owned by a different user or if the permissions are too restrictive.
-
-2. **Missing or Incorrect SSH Key Permissions**: The SSH key used might not have the correct permissions, or it might not correspond to the user that owns the directory on the server.
-
-Here are some steps to troubleshoot and resolve the issue:
-
-### 1. **Check Directory Permissions on the Server**
-   - SSH into the server manually using the same credentials:
-     ```bash
-     ssh -i /path/to/your/private/key ${{ secrets.USER }}@${{ secrets.IP }}
-     ```
-   - Once logged in, check the ownership and permissions of the directory:
-     ```bash
-     ls -ld /home/***/social_media
-     ```
-   - If the directory is not owned by `${{ secrets.USER }}`, you can change the ownership:
-     ```bash
-     sudo chown -R $USER:$USER /home/***/social_media
-     ```
-   - Ensure the user has write permissions:
-     ```bash
-     chmod -R 755 /home/***/social_media
-     ```
-
-### 2. **Check the SSH Key Permissions**
-   - Ensure the SSH key being used corresponds to the user with the correct permissions on the server.
-   - Verify that the SSH key is correctly added and used by the GitHub Action:
-     ```yaml
-     uses: webfactory/ssh-agent@v0.5.4
-     with:
-       ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-     ```
-
-### 3. **Modify the Git Pull Command**
-   - Ensure that the directory exists and that you have the necessary permissions to perform the pull operation:
-     ```bash
-     if [ ! -d "$PROJECT_PATH/.git" ]; then
-       mkdir -p $PROJECT_PATH
-       git clone $GIT_REPO $PROJECT_PATH
-     else
-       cd $PROJECT_PATH
-       git pull origin $GIT_BRANCH
-     fi
-     ```
-
-### 4. **Update the GitHub Actions Workflow**
-   If you update the directory ownership and permissions or ensure the correct SSH key is used, you can rerun the GitHub Actions workflow.
-
-Here’s a revised version of the workflow with added debugging commands:
-
-```yaml
 name: Deploy to Server
 
 on:
@@ -104,6 +51,3 @@ jobs:
             docker-compose down
             docker-compose up -d
           EOF
-```
-
-This should help ensure the correct permissions and ownership are in place and allow the Git pull to succeed.
